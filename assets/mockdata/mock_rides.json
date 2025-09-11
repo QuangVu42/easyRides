@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ride_001",
+    "code": "VN123",
+    "departure_time": "2025-09-11T08:30:00",
+    "start_location": "Hà Nội",
+    "end_location": "Thanh Hóa",
+    "driver": "Nguyễn Văn A",
+    "price": 250000,
+    "status": "available"
+  },
+  {
+    "id": "ride_002",
+    "code": "VN124",
+    "departure_time": "2025-09-11T09:00:00",
+    "start_location": "Thanh Hóa",
+    "end_location": "Nghệ An",
+    "driver": "Trần Văn B",
+    "price": 180000,
+    "status": "available"
+  }
+]
