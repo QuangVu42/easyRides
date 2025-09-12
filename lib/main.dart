@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import './screens/login_screen.dart';
+import './screens/trip_list_screen.dart';
+import './screens/settings_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(TripBiddingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class TripBiddingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ride App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginScreen(),
+      title: 'Trip Bidding App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: LoginScreen(),
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/trips': (context) => TripListScreen(),
+        '/settings': (context) => SettingsScreen(),
+      },
     );
   }
 }
+
+

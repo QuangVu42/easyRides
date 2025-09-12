@@ -3,14 +3,14 @@ import '../models/ride.dart';
 import '../services/api_service.dart';
 import '../widgets/ride_item.dart';
 
-class RidesScreen extends StatefulWidget {
-  const RidesScreen({super.key});
+class TripCompletedScreen extends StatefulWidget {
+  const TripCompletedScreen({super.key});
 
   @override
-  State<RidesScreen> createState() => _RidesScreenState();
+  State<TripCompletedScreen> createState() => _RidesScreenState();
 }
 
-class _RidesScreenState extends State<RidesScreen> {
+class _RidesScreenState extends State<TripCompletedScreen> {
   late Future<List<Ride>> futureRides;
 
   @override

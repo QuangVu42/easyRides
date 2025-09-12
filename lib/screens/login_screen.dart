@@ -1,127 +1,90 @@
 import 'package:flutter/material.dart';
-import 'rides_screen.dart';
-import '../components/register.dart';
+import '../services/MockDataService.dart';
+import '../models/index.dart';
+import './trip_list_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+// Login Screen
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  Future<void> _login() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    User? user = await MockDataService.login(
+      phoneController.text,
+      passwordController.text,
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => TripListScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng nhập thất bại! Vui lòng thử lại.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController userController = TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Đăng nhập",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-        elevation: 4,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)], // xanh nhạt → trắng
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-
-        ),
-
-            child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Container(
-                height: 200,
-                width: double.infinity,
-                child: Image.asset(
-                  'assets/images/carLogo.png',
-                  fit: BoxFit.contain,
-                ),
+      appBar: AppBar(title: Text('Đăng nhập')),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: phoneController,
+              decoration: InputDecoration(
+                labelText: 'Số điện thoại',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: userController,
-                decoration: const InputDecoration(labelText: "User ID"),
+              keyboardType: TextInputType.phone,
+            ),
+            SizedBox(height: 16),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                labelText: 'Mật khẩu',
+                border: OutlineInputBorder(),
               ),
-              TextField(
-                controller: userController,
-                decoration: const InputDecoration(labelText: "Password"),
-                obscureText: true, // ẩn mật khẩu
+              obscureText: true,
+            ),
+            SizedBox(height: 24),
+            isLoading
+                ? CircularProgressIndicator()
+                : ElevatedButton(
+              onPressed: _login,
+              child: Text('Đăng nhập'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
               ),
-              const SizedBox(height: 20),
-
-                  SizedBox(
-                    width: double.infinity, // full chiều ngang
-                    child:
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => const RidesScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text("Đăng nhập"),
-                  ),
-                  ),
-              const SizedBox(height: 20),
-              Text(
-                "Nếu bạn chưa có tài khoản vui lòng đăng ký",
-                style: TextStyle(
-                  fontSize: 14,              // kích thước chữ
-                  color: Colors.grey,        // màu chữ
-                  letterSpacing: 1,        // khoảng cách giữa các ký tự
-                  fontStyle: FontStyle.italic, // in nghiêng
-                  decorationColor: Colors.grey,          // màu gạch
-                  decorationStyle: TextDecorationStyle.dashed, // kiểu gạch (dotted, dashed, wavy)
-                ),
-                textAlign: TextAlign.center,  // căn giữa
-                maxLines: 2,                  // số dòng tối đa
-                overflow: TextOverflow.ellipsis, // hiển thị ... nếu dài quá
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity, // full chiều ngang
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14), // chỉ set chiều cao
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    "Đăng ký",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Demo: Số điện thoại: 0123456789, Mật khẩu: 123456',
+              style: TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
-
     );
   }
 }

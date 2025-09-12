@@ -16,8 +16,8 @@ class RideItem extends StatelessWidget {
       child: ListTile(
         title: Text("Mã chuyến: ${ride.code}"),
         subtitle: Text(
-          "Thời gian: ${DateFormatter.format(ride.time, 'dd/MM/yyyy HH:mm')}\n"
-              "Lộ trình: ${ride.startLocation} → ${ride.endLocation}\n"
+          // "Thời gian: ${DateFormatter.format(ride.time, 'dd/MM/yyyy HH:mm')}\n"
+          //     "Lộ trình: ${ride.startLocation} → ${ride.endLocation}\n"
               "Tài xế: ${ride.driver}\n"
               "Giá vé: ${ride.price} VND",
         ),

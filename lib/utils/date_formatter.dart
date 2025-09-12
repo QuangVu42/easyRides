@@ -1,28 +1,42 @@
 import 'package:intl/intl.dart';
 
 class DateFormatter {
-  /// truyền format
-  static String format(String isoString, String pattern) {
+  /// Truyền DateTime + pattern
+  static String format(DateTime dateTime, String pattern) {
     try {
-      final dateTime = DateTime.parse(isoString);
       return DateFormat(pattern).format(dateTime);
     } catch (e) {
-      return isoString; // fallback nếu parse lỗi
+      return dateTime.toString(); // fallback nếu có lỗi format
     }
   }
-  /// shortcut: format ISO sang dd/MM/yyyy HH:mm
+
+  /// shortcut: format ISO String sang dd/MM/yyyy HH:mm
   static String formatDateTime(String isoString) {
-    return format(isoString, 'dd/MM/yyyy HH:mm');
+    try {
+      final dateTime = DateTime.parse(isoString);
+      return format(dateTime, 'dd/MM/yyyy HH:mm');
+    } catch (e) {
+      return isoString;
+    }
   }
 
   /// shortcut: chỉ giờ phút
   static String formatTime(String isoString) {
-    return format(isoString, 'HH:mm');
+    try {
+      final dateTime = DateTime.parse(isoString);
+      return format(dateTime, 'HH:mm');
+    } catch (e) {
+      return isoString;
+    }
   }
 
   /// shortcut: chỉ ngày tháng
   static String formatDate(String isoString) {
-    return format(isoString, 'dd/MM/yyyy');
+    try {
+      final dateTime = DateTime.parse(isoString);
+      return format(dateTime, 'dd/MM/yyyy');
+    } catch (e) {
+      return isoString;
+    }
   }
-
 }
