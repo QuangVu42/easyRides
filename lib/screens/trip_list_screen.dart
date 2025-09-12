@@ -8,6 +8,8 @@ import './trip_completed_screen.dart';
 import '../utils/format_Currency.dart';
 import '../utils/date_formatter.dart';
 import '../screens/pending_Screen.dart';
+import './trip_accepted_screen.dart';
+import './trip_running_screen.dart';
 
 // Trip List Screen
 class TripListScreen extends StatefulWidget {
@@ -110,8 +112,10 @@ class TripCard extends StatelessWidget {
         screen = BiddingScreen(trip: trip);
         break;
       case TripStatus.accepted:
+        screen = AcceptedScreen(trip: trip);
+        break;
       case TripStatus.running:
-        screen = TripDetailScreen(trip: trip);
+        screen = RunningScreen(trip: trip);
         break;
       case TripStatus.completed:
         screen = TripCompletedScreen();
@@ -161,6 +165,7 @@ class TripCard extends StatelessWidget {
               SizedBox(height: 8),
 
               /// Info chung
+               if (trip.status != TripStatus.completed)
               Text('Giá yêu cầu: ${formatCurrency(trip.requestedPrice)}'),
               if (trip.bidPrice != null)
                 Text('Ra giá: ${formatCurrency(trip.bidPrice!)}'),

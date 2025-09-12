@@ -3,10 +3,10 @@ import '../models/Trip.dart';
 import '../services/MockDataService.dart';
 import '../models/index.dart';
 
-class PendingScreen extends StatelessWidget {
+class AcceptedScreen extends StatelessWidget {
   final Trip trip;
 
-  const PendingScreen({Key? key, required this.trip}) : super(key: key);
+  const AcceptedScreen({Key? key, required this.trip}) : super(key: key);
 
   String _formatCurrency(int amount) {
     return "${amount.toString()} đ";
@@ -15,7 +15,7 @@ class PendingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Chờ duyệt")),
+      appBar: AppBar(title: const Text("Đã nhận")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -36,9 +36,9 @@ class PendingScreen extends StatelessWidget {
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Chip(
-                      label: const Text("Chờ duyệt"),
-                      backgroundColor: Colors.orange.shade100,
-                      labelStyle: const TextStyle(color: Colors.orange),
+                      label: const Text("Đã nhận"),
+                      backgroundColor: Colors.green,
+                      labelStyle: const TextStyle(color: Colors.white),
                     )
                   ],
                 ),
@@ -56,7 +56,7 @@ class PendingScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Text("Tài xế: ${trip.driverName ?? 'Đang cập nhật'}",
-                          Text("Tài xế: Nguyễn văn B}",
+                        Text("Tài xế: Nguyễn văn B}",
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600)),
                         Text("Xe: ${trip.vehicleType}",
@@ -94,6 +94,12 @@ class PendingScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
+                                    Text("⚠️ Nếu bạn hủy chuyến này:"),
+                                    SizedBox(height: 8),
+                                    Text("- Bạn sẽ bị trừ 10 điểm uy tín."),
+                                    Text("- Có thể ảnh hưởng đến quyền nhận chuyến sau."),
+                                    Text("- Hệ thống sẽ ghi lại lịch sử hủy."),
+                                    SizedBox(height: 12),
                                     Text("Bạn có chắc chắn muốn hủy không?",
                                         style: TextStyle(fontWeight: FontWeight.bold)),
                                   ],
@@ -120,7 +126,7 @@ class PendingScreen extends StatelessWidget {
                                       backgroundColor: Colors.redAccent,
                                       foregroundColor: Colors.white,
                                     ),
-                                    child: const Text("Hủy"),
+                                    child: const Text("Hủy chuyến"),
                                   ),
                                 ],
                               );
@@ -147,7 +153,7 @@ class PendingScreen extends StatelessWidget {
                           foregroundColor: Colors.white,
                           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        child: const Text("Đổi tài xế"),
+                        child: const Text("Chuyển đổi"),
                       ),
                     ),
                   ],
@@ -171,7 +177,7 @@ void _showChangeDriverDialog(BuildContext context, Trip trip) {
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: const Text("Chọn tài xế mới"),
+            title: const Text("Chọn người chuyển đổi"),
             content: SizedBox(
               width: double.maxFinite,
               child: Column(
