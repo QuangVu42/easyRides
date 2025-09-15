@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/MockDataService.dart';
 import '../models/index.dart';
 import './trip_list_screen.dart';
+import './TaiXeHomeScreen/TaiXeHomeScreen.dart';
 
 // Login Screen
 class LoginScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  bool _obscureText = true;
 
   Future<void> _login() async {
     setState(() {
@@ -29,10 +31,17 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => TripListScreen()),
-      );
+      if(user.role == 2){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TripListScreen()),
+        );
+      }else if(user.role == 3){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TaiXeHomeScreen ()),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Đăng nhập thất bại! Vui lòng thử lại.')),
@@ -60,11 +69,21 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 16),
             TextField(
               controller: passwordController,
+              obscureText: _obscureText,
               decoration: InputDecoration(
                 labelText: 'Mật khẩu',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
               ),
-              obscureText: true,
             ),
             SizedBox(height: 24),
             isLoading
@@ -78,7 +97,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 16),
             Text(
-              'Demo: Số điện thoại: 0123456789, Mật khẩu: 123456',
+              'Đại lý: Số điện thoại: 0123456789, Mật khẩu: 123456',
+              style: TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Tài xế: Số điện thoại: 9876543210, Mật khẩu: 123456',
               style: TextStyle(color: Colors.grey),
               textAlign: TextAlign.center,
             ),

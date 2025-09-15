@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './screens/login_screen.dart';
 import './screens/trip_list_screen.dart';
 import './screens/settings_screen.dart';
+import './layout/daily.dart';
 
 void main() {
   runApp(TripBiddingApp());

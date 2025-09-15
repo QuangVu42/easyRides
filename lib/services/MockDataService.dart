@@ -656,10 +656,22 @@ class MockDataService {
     if (phone == '0123456789' && password == '123456') {
       currentUser = User(
         id: '1',
-        name: 'Người dùng test',
+        name: 'Đại lý test',
         phone: phone,
+        role: 2,
         points: 100,
         token: 'mock_token_123',
+      );
+      return currentUser;
+    }
+    if (phone == '9876543210' && password == '123456') {
+      currentUser = User(
+        id: '2',
+        name: 'Tài xế A',
+        role: 3,
+        phone: phone,
+        points: 100,
+        token: 'mock_token_1234',
       );
       return currentUser;
     }
@@ -690,6 +702,7 @@ class MockDataService {
         phone: currentUser!.phone,
         points: currentUser!.points - 10,
         token: currentUser!.token,
+        role: currentUser!.role,
       );
     }
 

@@ -10,7 +10,9 @@ import '../utils/date_formatter.dart';
 import '../screens/pending_Screen.dart';
 import './trip_accepted_screen.dart';
 import './trip_running_screen.dart';
-
+import './Agent_info_screen.dart';
+import './point_history_screen.dart';
+import '../components/notification_Screen.dart';
 // Trip List Screen
 class TripListScreen extends StatefulWidget {
   @override
@@ -41,15 +43,79 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Center(
-              child: Text('Điểm: ${user.points}', style: TextStyle(fontSize: 16)),
+              child: Text(
+                'Điểm: ${user.points}',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
-            ),
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationScreen()),
+                  );
+                },
+              ),
+              Positioned(
+                right: 6,
+                top: 6,
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '3', // số thông báo (có thể lấy từ API)
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert), // Icon 3 chấm
+            onSelected: (value) {
+              switch (value) {
+                case 'settings':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                  break;
+                case 'screen1':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AgentInfoScreen()),
+                  );
+                  break;
+                case 'screen2':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PointHistoryScreen()),
+                  );
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'settings',
+                child: Text('Cài đặt'),
+              ),
+              PopupMenuItem(
+                value: 'screen1',
+                child: Text('Thông tin'),
+              ),
+              PopupMenuItem(
+                value: 'screen2',
+                child: Text('Lịch sử'),
+              ),
+            ],
           ),
         ],
         bottom: TabBar(

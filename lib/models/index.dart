@@ -4,8 +4,9 @@ class User {
   final String phone;
   final int points;
   final String token;
+  final int role;
 
-  User({required this.id, required this.name, required this.phone, required this.points, required this.token});
+  User({required this.id, required this.name, required this.phone, required this.points, required this.token, required this.role});
 }
 
 class Driver {
