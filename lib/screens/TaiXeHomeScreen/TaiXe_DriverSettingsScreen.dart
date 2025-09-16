@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../login_screen.dart'; // nhớ import nếu LoginScreen là widget riêng
+import '../auth/login_screen.dart'; // nhớ import nếu LoginScreen là widget riêng
 
 class DriverSettingsScreen extends StatelessWidget {
   @override
