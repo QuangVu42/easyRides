@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/ride.dart';
 import '../services/api_service.dart';
 import '../utils/date_formatter.dart';
+import '../components/Driver_Map_View.dart'; // import màn chi tiết có map
 
 class RideItem extends StatelessWidget {
   final Ride ride;
@@ -16,23 +17,18 @@ class RideItem extends StatelessWidget {
       child: ListTile(
         title: Text("Mã chuyến: ${ride.code}"),
         subtitle: Text(
-          // "Thời gian: ${DateFormatter.format(ride.time, 'dd/MM/yyyy HH:mm')}\n"
-          //     "Lộ trình: ${ride.startLocation} → ${ride.endLocation}\n"
-              "Tài xế: ${ride.driver}\n"
+          "Tài xế: ${ride.driver}\n"
               "Giá vé: ${ride.price} VND",
         ),
-        trailing: ElevatedButton(
-          onPressed: () async {
-            bool success = await ApiService.acceptRide(ride.id, "user123");
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(success ? "Nhận chuyến thành công" : "Thất bại"),
-              ),
-            );
-            if (success) onAccepted();
-          },
-          child: const Text("Nhận chuyến"),
-        ),
+        // 👉 Thêm onTap để mở chi tiết chuyến đi
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DriverMapView(ride: ride),
+            ),
+          );
+        },
       ),
     );
   }

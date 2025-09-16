@@ -100,6 +100,13 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
                     MaterialPageRoute(builder: (context) => PointHistoryScreen()),
                   );
                   break;
+                case 'screen3':
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',   // route name đã khai báo trong MaterialApp
+                        (Route<dynamic> route) => false,
+                  );
+                  break;
               }
             },
             itemBuilder: (context) => [
@@ -114,6 +121,10 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
               PopupMenuItem(
                 value: 'screen2',
                 child: Text('Lịch sử'),
+              ),
+              PopupMenuItem(
+                value: 'screen3',
+                child: Text('Đăng xuất'),
               ),
             ],
           ),
