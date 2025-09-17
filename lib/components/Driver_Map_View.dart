@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/ride.dart';
+import '../utils/format_Currency.dart';
 
 class DriverMapView extends StatefulWidget {
   final Ride ride;
@@ -32,6 +33,33 @@ class _DriverMapViewState extends State<DriverMapView> {
   void initState() {
     super.initState();
     _getRoute();
+  }
+
+  Widget _infoRow(IconData icon, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: Colors.blueAccent),
+        const SizedBox(width: 8),
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+              children: [
+                TextSpan(
+                  text: "$label: ",
+                  style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                ),
+                TextSpan(
+                  text: value,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Future<void> _getRoute() async {
@@ -96,15 +124,25 @@ class _DriverMapViewState extends State<DriverMapView> {
         children: [
           // Thông tin chuyến đi
           Padding(
-            padding: const EdgeInsets.all(11.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // 👈 căn trái
-              children: [
-                Text("Tài xế: ${ride.driver}", style: const TextStyle(fontSize: 16)),
-                Text("Giá vé: ${ride.price} VND", style: const TextStyle(fontSize: 16)),
-                Text("Điểm đi: ${ride.startLocation}", style: const TextStyle(fontSize: 16)),
-                Text("Điểm đến: ${ride.endLocation}", style: const TextStyle(fontSize: 16)),
-              ],
+            padding: const EdgeInsets.all(12.0),
+            child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _infoRow(Icons.person, "Tài xế", ride.driver),
+                    const SizedBox(height: 8),
+                    _infoRow(Icons.attach_money, "Giá vé", "${formatCurrency(500000)}"),
+                    const SizedBox(height: 8),
+                    _infoRow(Icons.location_on, "Điểm đi", ride.startLocation),
+                    const SizedBox(height: 8),
+                    _infoRow(Icons.flag, "Điểm đến", ride.endLocation),
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(

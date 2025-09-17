@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './TaxiXe_TripListScreen.dart';
 import './Taixe_CompletedTripsScreen.dart';
 import './Taixe_NotificationsScreen.dart';
-import './TaiXe_DriverSettingsScreen.dart';
+import './Taixe_Info_Screen.dart';
 
 class DriverHomePage extends StatefulWidget {
   final int initialIndex;
@@ -18,20 +18,79 @@ class _DriverHomePageState extends State<DriverHomePage> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex; // set tab mặc định
+    _selectedIndex = widget.initialIndex;
   }
 
   final List<Widget> _screens = [
     TripListScreen(),
     CompletedTripsScreen(),
-    NotificationsScreen(),
-    DriverSettingsScreen(),
+    NotificationScreen(),
+    Center(child: Text("Mở menu cài đặt để xem chi tiết")),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _handleMenuAction(String value) {
+    if (value == "info") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DriverInfoScreen()),
+      );
+    } else if (value == "logout") {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/login',
+            (Route<dynamic> route) => false,
+      );
+    }
+  }
+
+
+  void _showSettingsMenu(BuildContext context, Offset offset) async {
+    final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+
+    final value = await showMenu<String>(
+      context: context,
+      position: RelativeRect.fromRect(
+        Rect.fromPoints(
+          offset,
+          offset,
+        ),
+        Offset.zero & overlay.size,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      items: [
+        PopupMenuItem(
+          value: "info",
+          child: Row(
+            children: [
+              Icon(Icons.person, color: Colors.blue),
+              SizedBox(width: 8),
+              Text("Thông tin tài xế"),
+            ],
+          ),
+        ),
+        PopupMenuDivider(),
+        PopupMenuItem(
+          value: "logout",
+          child: Row(
+            children: [
+              Icon(Icons.logout, color: Colors.red),
+              SizedBox(width: 8),
+              Text("Đăng xuất"),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    if (value != null) _handleMenuAction(value);
   }
 
   @override
@@ -56,10 +115,18 @@ class _DriverHomePageState extends State<DriverHomePage> {
               setState(() => _selectedIndex = 2);
             },
           ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              setState(() => _selectedIndex = 3);
+          Builder(
+            builder: (context) {
+              return IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  final RenderBox button = context.findRenderObject() as RenderBox;
+                  final Offset offset = button.localToGlobal(
+                    button.size.bottomRight(Offset.zero),
+                  );
+                  _showSettingsMenu(context, offset);
+                },
+              );
             },
           ),
         ],

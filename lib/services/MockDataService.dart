@@ -8,21 +8,32 @@ class MockDataService {
   static List<Driver> drivers = [
     Driver(id: '1', name: 'Nguyễn Văn A', phone: '0901234567'),
     Driver(id: '2', name: 'Trần Thị B', phone: '0912345678'),
-    Driver(id: '3', name: 'Vũ Văn Bình', phone: '0912345677'),
+    Driver(id: '3', name: 'Vũ Như Quân', phone: '0912345677'),
+    Driver(id: '4', name: 'Vũ Văn Lương', phone: '0912345677'),
+    Driver(id: '5', name: 'Nguyễn Văn Bình', phone: '0912345647'),
+    Driver(id: '6', name: 'Tô Văn Hồng', phone: '0912345377'),
+    Driver(id: '7', name: 'Đinh Văn Bình', phone: '0912315677'),
+    Driver(id: '8', name: 'Bùi Văn Ca', phone: '0912445677'),
+    Driver(id: '9', name: 'Vũ Văn Nam', phone: '0922345677'),
+
   ];
 
   static List<Vehicle> vehicles = [
     Vehicle(id: '1', type: '4 chỗ', licensePlate: '30A-12345', driverId: '1'),
     Vehicle(id: '2', type: '7 chỗ', licensePlate: '30B-67890', driverId: '2'),
-    Vehicle(id: '3', type: '20 chỗ', licensePlate: '30B-67220', driverId: '3'),
+    Vehicle(id: '3', type: '7 chỗ', licensePlate: '30B-67221', driverId: '3'),
+    Vehicle(id: '4', type: '20 chỗ', licensePlate: '30B-67220', driverId: '4'),
+    Vehicle(id: '5', type: '4 chỗ', licensePlate: '30B-67245', driverId: '5'),
+    Vehicle(id: '6', type: '5 chỗ', licensePlate: '30B-68820', driverId: '6'),
+
   ];
 
   static List<Trip> trips = [
     // === BIDDING (8 trips) ===
     Trip(
       id: 'b1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hải Phòng',
+      fromLocation: 'Sân bay Nội Bài, Sóc Sơn, Hà Nội',
+      toLocation: 'Bến xe Niệm Nghĩa, Lê Chân, Hải Phòng',
       requestedPrice: 500000,
       startTime: DateTime.now().add(Duration(hours: 2)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 30)),
@@ -33,8 +44,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b2',
-      fromLocation: 'TP.HCM',
-      toLocation: 'Đà Lạt',
+      fromLocation: 'Nhà thờ Đức Bà, Quận 1, TP.HCM',
+      toLocation: 'Chợ Đà Lạt, Lâm Đồng',
       requestedPrice: 1200000,
       startTime: DateTime.now().add(Duration(hours: 6)),
       biddingEndTime: DateTime.now().add(Duration(hours: 2)),
@@ -44,8 +55,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b3',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Huế',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Kinh thành Huế, Thừa Thiên Huế',
       requestedPrice: 700000,
       startTime: DateTime.now().add(Duration(hours: 3)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 45)),
@@ -55,8 +66,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b4',
-      fromLocation: 'Cần Thơ',
-      toLocation: 'Sóc Trăng',
+      fromLocation: 'Bến Ninh Kiều, Cần Thơ',
+      toLocation: 'Chợ Bông Sen, Sóc Trăng',
       requestedPrice: 350000,
       startTime: DateTime.now().add(Duration(hours: 1)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 20)),
@@ -66,8 +77,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b5',
-      fromLocation: 'Nha Trang',
-      toLocation: 'Đà Lạt',
+      fromLocation: 'Tháp Trầm Hương, Nha Trang',
+      toLocation: 'Chợ Đà Lạt, Lâm Đồng',
       requestedPrice: 750000,
       startTime: DateTime.now().add(Duration(hours: 4)),
       biddingEndTime: DateTime.now().add(Duration(hours: 1)),
@@ -77,8 +88,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b6',
-      fromLocation: 'Thanh Hóa',
-      toLocation: 'Nghệ An',
+      fromLocation: 'Ga Thanh Hóa, TP Thanh Hóa',
+      toLocation: 'Quảng trường Hồ Chí Minh, TP Vinh, Nghệ An',
       requestedPrice: 650000,
       startTime: DateTime.now().add(Duration(hours: 5)),
       biddingEndTime: DateTime.now().add(Duration(hours: 2)),
@@ -89,8 +100,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b7',
-      fromLocation: 'Bắc Ninh',
-      toLocation: 'Hà Nội',
+      fromLocation: 'Chùa Phật Tích, Bắc Ninh',
+      toLocation: 'Hồ Hoàn Kiếm, Hà Nội',
       requestedPrice: 300000,
       startTime: DateTime.now().add(Duration(hours: 2)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 15)),
@@ -100,8 +111,8 @@ class MockDataService {
     ),
     Trip(
       id: 'b8',
-      fromLocation: 'Phú Quốc',
-      toLocation: 'Rạch Giá',
+      fromLocation: 'Sân bay Phú Quốc, Kiên Giang',
+      toLocation: 'Bến xe Rạch Giá, Kiên Giang',
       requestedPrice: 1100000,
       startTime: DateTime.now().add(Duration(hours: 8)),
       biddingEndTime: DateTime.now().add(Duration(hours: 3)),
@@ -114,8 +125,8 @@ class MockDataService {
     // === PENDING (8 trips) ===
     Trip(
       id: 'p1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Nam Định',
+      fromLocation: 'Bến xe Giáp Bát, Hà Nội',
+      toLocation: 'Ga Nam Định, TP Nam Định',
       requestedPrice: 450000,
       startTime: DateTime.now().add(Duration(hours: 2)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 30)),
@@ -128,8 +139,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p2',
-      fromLocation: 'TP.HCM',
-      toLocation: 'Vũng Tàu',
+      fromLocation: 'Bến xe Miền Đông, TP.HCM',
+      toLocation: 'Bãi Sau, Vũng Tàu',
       requestedPrice: 800000,
       startTime: DateTime.now().add(Duration(hours: 4)),
       biddingEndTime: DateTime.now().add(Duration(hours: 1)),
@@ -142,8 +153,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p3',
-      fromLocation: 'Huế',
-      toLocation: 'Quảng Trị',
+      fromLocation: 'Ga Huế, Thừa Thiên Huế',
+      toLocation: 'Chợ Đông Hà, Quảng Trị',
       requestedPrice: 600000,
       startTime: DateTime.now().add(Duration(hours: 3)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 40)),
@@ -156,8 +167,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p4',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Quảng Nam',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Chợ Tam Kỳ, Quảng Nam',
       requestedPrice: 250000,
       startTime: DateTime.now().add(Duration(hours: 1)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 20)),
@@ -170,8 +181,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p5',
-      fromLocation: 'Hải Dương',
-      toLocation: 'Hà Nội',
+      fromLocation: 'Ga Hải Dương, Hải Dương',
+      toLocation: 'Bến xe Mỹ Đình, Hà Nội',
       requestedPrice: 500000,
       startTime: DateTime.now().add(Duration(hours: 2)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 30)),
@@ -184,8 +195,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p6',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Ninh Bình',
+      fromLocation: 'Hồ Gươm, Hà Nội',
+      toLocation: 'Tràng An, Ninh Bình',
       requestedPrice: 600000,
       startTime: DateTime.now().add(Duration(hours: 3)),
       biddingEndTime: DateTime.now().add(Duration(hours: 1)),
@@ -198,8 +209,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p7',
-      fromLocation: 'Sài Gòn',
-      toLocation: 'Biên Hòa',
+      fromLocation: 'Chợ Bến Thành, Quận 1, TP.HCM',
+      toLocation: 'Ga Biên Hòa, Đồng Nai',
       requestedPrice: 300000,
       startTime: DateTime.now().add(Duration(hours: 1)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 15)),
@@ -212,8 +223,8 @@ class MockDataService {
     ),
     Trip(
       id: 'p8',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Hội An',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Phố cổ Hội An, Quảng Nam',
       requestedPrice: 200000,
       startTime: DateTime.now().add(Duration(hours: 1)),
       biddingEndTime: DateTime.now().add(Duration(minutes: 15)),
@@ -225,11 +236,11 @@ class MockDataService {
       selectedVehicleId: 'v8',
     ),
 
-    // === ACCEPTED (8 trips) ===
+// === ACCEPTED (8 trips) ===
     Trip(
       id: 'a1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Bắc Giang',
+      fromLocation: 'Bến xe Giáp Bát, Hà Nội',
+      toLocation: 'Ga Bắc Giang, Bắc Giang',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(hours: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -241,8 +252,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a2',
-      fromLocation: 'TP.HCM',
-      toLocation: 'Củ Chi',
+      fromLocation: 'Chợ Bến Thành, Quận 1, TP.HCM',
+      toLocation: 'Địa đạo Củ Chi, TP.HCM',
       requestedPrice: 300000,
       startTime: DateTime.now().subtract(Duration(hours: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 3)),
@@ -254,8 +265,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a3',
-      fromLocation: 'Huế',
-      toLocation: 'Đà Nẵng',
+      fromLocation: 'Kinh thành Huế, Thừa Thiên Huế',
+      toLocation: 'Cầu Rồng, Đà Nẵng',
       requestedPrice: 600000,
       startTime: DateTime.now().subtract(Duration(hours: 4)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 5)),
@@ -267,8 +278,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a4',
-      fromLocation: 'Cần Thơ',
-      toLocation: 'An Giang',
+      fromLocation: 'Bến Ninh Kiều, Cần Thơ',
+      toLocation: 'Chợ Châu Đốc, An Giang',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(hours: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -280,8 +291,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a5',
-      fromLocation: 'Nha Trang',
-      toLocation: 'Phan Rang',
+      fromLocation: 'Tháp Trầm Hương, Nha Trang',
+      toLocation: 'Chợ Phan Rang, Ninh Thuận',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(hours: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 3)),
@@ -293,8 +304,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a6',
-      fromLocation: 'Đà Lạt',
-      toLocation: 'Buôn Mê Thuột',
+      fromLocation: 'Chợ Đà Lạt, Lâm Đồng',
+      toLocation: 'Buôn Ma Thuột, Đắk Lắk',
       requestedPrice: 700000,
       startTime: DateTime.now().subtract(Duration(hours: 6)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 7)),
@@ -306,8 +317,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a7',
-      fromLocation: 'Phú Quốc',
-      toLocation: 'Hà Tiên',
+      fromLocation: 'Sân bay Phú Quốc, Kiên Giang',
+      toLocation: 'Bến xe Hà Tiên, Kiên Giang',
       requestedPrice: 800000,
       startTime: DateTime.now().subtract(Duration(hours: 3)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 4)),
@@ -319,8 +330,8 @@ class MockDataService {
     ),
     Trip(
       id: 'a8',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hòa Bình',
+      fromLocation: 'Hồ Gươm, Hà Nội',
+      toLocation: 'Thủy điện Hòa Bình, Hòa Bình',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(hours: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 3)),
@@ -331,11 +342,11 @@ class MockDataService {
       selectedVehicleId: 'v16',
     ),
 
-    // === RUNNING (8 trips) ===
+// === RUNNING (8 trips) ===
     Trip(
       id: 'r1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Lạng Sơn',
+      fromLocation: 'Bến xe Mỹ Đình, Hà Nội',
+      toLocation: 'Cửa khẩu Hữu Nghị, Lạng Sơn',
       requestedPrice: 900000,
       startTime: DateTime.now().subtract(Duration(minutes: 30)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 3)),
@@ -347,8 +358,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r2',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Quảng Ngãi',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Ga Quảng Ngãi, Quảng Ngãi',
       requestedPrice: 700000,
       startTime: DateTime.now().subtract(Duration(minutes: 45)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -360,8 +371,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r3',
-      fromLocation: 'Huế',
-      toLocation: 'Đồng Hới',
+      fromLocation: 'Ga Huế, Thừa Thiên Huế',
+      toLocation: 'Ga Đồng Hới, Quảng Bình',
       requestedPrice: 800000,
       startTime: DateTime.now().subtract(Duration(minutes: 20)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -373,8 +384,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r4',
-      fromLocation: 'Sài Gòn',
-      toLocation: 'Tây Ninh',
+      fromLocation: 'Chợ Bến Thành, Quận 1, TP.HCM',
+      toLocation: 'Tòa thánh Cao Đài, Tây Ninh',
       requestedPrice: 600000,
       startTime: DateTime.now().subtract(Duration(minutes: 10)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 1)),
@@ -386,8 +397,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r5',
-      fromLocation: 'Cần Thơ',
-      toLocation: 'Hậu Giang',
+      fromLocation: 'Bến Ninh Kiều, Cần Thơ',
+      toLocation: 'Chợ Vị Thanh, Hậu Giang',
       requestedPrice: 300000,
       startTime: DateTime.now().subtract(Duration(minutes: 15)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 1)),
@@ -399,8 +410,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r6',
-      fromLocation: 'Nha Trang',
-      toLocation: 'Cam Ranh',
+      fromLocation: 'Tháp Trầm Hương, Nha Trang',
+      toLocation: 'Sân bay Cam Ranh, Khánh Hòa',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(minutes: 40)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -412,8 +423,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r7',
-      fromLocation: 'Đà Lạt',
-      toLocation: 'Bảo Lộc',
+      fromLocation: 'Chợ Đà Lạt, Lâm Đồng',
+      toLocation: 'TP Bảo Lộc, Lâm Đồng',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(minutes: 50)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 2)),
@@ -425,8 +436,8 @@ class MockDataService {
     ),
     Trip(
       id: 'r8',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Thái Nguyên',
+      fromLocation: 'Hồ Gươm, Hà Nội',
+      toLocation: 'Đại học Thái Nguyên, Thái Nguyên',
       requestedPrice: 450000,
       startTime: DateTime.now().subtract(Duration(minutes: 25)),
       biddingEndTime: DateTime.now().subtract(Duration(hours: 1)),
@@ -437,11 +448,11 @@ class MockDataService {
       selectedVehicleId: 'v24',
     ),
 
-    // === COMPLETED (8 trips) ===
+// === COMPLETED (8 trips) ===
     Trip(
       id: 'c1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hải Dương',
+      fromLocation: 'Bến xe Giáp Bát, Hà Nội',
+      toLocation: 'Ga Hải Dương, Hải Dương',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 2)),
@@ -453,8 +464,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c2',
-      fromLocation: 'Sài Gòn',
-      toLocation: 'Long An',
+      fromLocation: 'Chợ Bến Thành, Quận 1, TP.HCM',
+      toLocation: 'Long An Stadium, Long An',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(days: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 2, hours: 3)),
@@ -466,8 +477,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c3',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Tam Kỳ',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Chợ Tam Kỳ, Quảng Nam',
       requestedPrice: 300000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 1)),
@@ -479,8 +490,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c4',
-      fromLocation: 'Huế',
-      toLocation: 'Quảng Bình',
+      fromLocation: 'Kinh thành Huế, Thừa Thiên Huế',
+      toLocation: 'Động Phong Nha, Quảng Bình',
       requestedPrice: 700000,
       startTime: DateTime.now().subtract(Duration(days: 3)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 3, hours: 2)),
@@ -492,8 +503,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c5',
-      fromLocation: 'Nha Trang',
-      toLocation: 'Phan Thiết',
+      fromLocation: 'Tháp Trầm Hương, Nha Trang',
+      toLocation: 'Bãi biển Phan Thiết, Bình Thuận',
       requestedPrice: 1000000,
       startTime: DateTime.now().subtract(Duration(days: 5)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 5, hours: 3)),
@@ -505,8 +516,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c6',
-      fromLocation: 'Cần Thơ',
-      toLocation: 'Vĩnh Long',
+      fromLocation: 'Bến Ninh Kiều, Cần Thơ',
+      toLocation: 'Ga Vĩnh Long, Vĩnh Long',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(days: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 2, hours: 1)),
@@ -518,8 +529,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c7',
-      fromLocation: 'Đà Lạt',
-      toLocation: 'Nha Trang',
+      fromLocation: 'Chợ Đà Lạt, Lâm Đồng',
+      toLocation: 'Tháp Trầm Hương, Nha Trang',
       requestedPrice: 800000,
       startTime: DateTime.now().subtract(Duration(days: 4)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 4, hours: 2)),
@@ -531,8 +542,8 @@ class MockDataService {
     ),
     Trip(
       id: 'c8',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hải Phòng',
+      fromLocation: 'Bến xe Gia Lâm, Hà Nội',
+      toLocation: 'Ga Hải Phòng, Hải Phòng',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 2)),
@@ -543,11 +554,11 @@ class MockDataService {
       selectedVehicleId: 'v32',
     ),
 
-    // === CANCELED (8 trips) ===
+// === CANCELED (8 trips) ===
     Trip(
       id: 'x1',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hòa Bình',
+      fromLocation: 'Hồ Gươm, Hà Nội',
+      toLocation: 'Thủy điện Hòa Bình, Hòa Bình',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 2)),
@@ -559,8 +570,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x2',
-      fromLocation: 'TP.HCM',
-      toLocation: 'Tây Ninh',
+      fromLocation: 'Chợ Bến Thành, Quận 1, TP.HCM',
+      toLocation: 'Tòa thánh Cao Đài, Tây Ninh',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(days: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 2, hours: 2)),
@@ -572,8 +583,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x3',
-      fromLocation: 'Đà Nẵng',
-      toLocation: 'Quảng Ngãi',
+      fromLocation: 'Cầu Rồng, Đà Nẵng',
+      toLocation: 'Ga Quảng Ngãi, Quảng Ngãi',
       requestedPrice: 600000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 2)),
@@ -585,8 +596,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x4',
-      fromLocation: 'Huế',
-      toLocation: 'Đà Nẵng',
+      fromLocation: 'Kinh thành Huế, Thừa Thiên Huế',
+      toLocation: 'Cầu Rồng, Đà Nẵng',
       requestedPrice: 400000,
       startTime: DateTime.now().subtract(Duration(days: 3)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 3, hours: 1)),
@@ -598,8 +609,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x5',
-      fromLocation: 'Cần Thơ',
-      toLocation: 'Sóc Trăng',
+      fromLocation: 'Bến Ninh Kiều, Cần Thơ',
+      toLocation: 'Chợ Sóc Trăng, Sóc Trăng',
       requestedPrice: 300000,
       startTime: DateTime.now().subtract(Duration(days: 2)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 2, hours: 1)),
@@ -611,8 +622,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x6',
-      fromLocation: 'Nha Trang',
-      toLocation: 'Đà Lạt',
+      fromLocation: 'Tháp Trầm Hương, Nha Trang',
+      toLocation: 'Chợ Đà Lạt, Lâm Đồng',
       requestedPrice: 700000,
       startTime: DateTime.now().subtract(Duration(days: 4)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 4, hours: 2)),
@@ -624,8 +635,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x7',
-      fromLocation: 'Hà Nội',
-      toLocation: 'Hải Phòng',
+      fromLocation: 'Bến xe Gia Lâm, Hà Nội',
+      toLocation: 'Ga Hải Phòng, Hải Phòng',
       requestedPrice: 500000,
       startTime: DateTime.now().subtract(Duration(days: 1)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 1, hours: 2)),
@@ -637,8 +648,8 @@ class MockDataService {
     ),
     Trip(
       id: 'x8',
-      fromLocation: 'Phú Quốc',
-      toLocation: 'Rạch Giá',
+      fromLocation: 'Sân bay Phú Quốc, Kiên Giang',
+      toLocation: 'Bến xe Rạch Giá, Kiên Giang',
       requestedPrice: 1000000,
       startTime: DateTime.now().subtract(Duration(days: 5)),
       biddingEndTime: DateTime.now().subtract(Duration(days: 5, hours: 2)),
@@ -648,6 +659,7 @@ class MockDataService {
       selectedDriverId: 'd40',
       selectedVehicleId: 'v40',
     ),
+
   ];
 
   static Future<User?> login(String phone, String password) async {

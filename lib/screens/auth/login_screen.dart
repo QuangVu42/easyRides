@@ -12,6 +12,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final FocusNode phoneFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
+
   bool isLoading = false;
   bool _obscureText = true;
 
@@ -51,74 +54,121 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: const Color(0xFFF9F9F9),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/carLogo.png'),
+                radius: 70,
+                backgroundImage: const AssetImage('assets/images/carLogo.png'),
                 backgroundColor: Colors.transparent,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
               // Title
               Text(
                 "Quản Lý Chuyến Đi",
                 style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF212121),
+                  fontWeight: FontWeight.w900,
+                  foreground: Paint()
+                    ..shader = const LinearGradient(
+                      colors: <Color>[Colors.blue, Colors.teal],
+                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+                  letterSpacing: 1.5,
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
               // Login Card
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
+                color: Colors.white.withOpacity(0.9),
                 elevation: 6,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       // Phone field
-                      TextField(
-                        controller: phoneController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.phone),
-                          labelText: 'Số điện thoại',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                      Focus(
+                        focusNode: phoneFocus,
+                        child: Builder(
+                          builder: (context) {
+                            final hasFocus = Focus.of(context).hasFocus;
+                            return TextField(
+                              controller: phoneController,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.phone,
+                                  color: hasFocus ? Colors.blue : Colors.grey,
+                                ),
+                                hintText: 'Số điện thoại',
+                                enabledBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                                ),
+                              ),
+                              keyboardType: TextInputType.phone,
+                            );
+                          },
                         ),
-                        keyboardType: TextInputType.phone,
                       ),
                       const SizedBox(height: 16),
 
                       // Password field
-                      TextField(
-                        controller: passwordController,
-                        obscureText: _obscureText,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
-                          labelText: 'Mật khẩu',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() => _obscureText = !_obscureText);
-                            },
+                      Focus(
+                        focusNode: passwordFocus,
+                        child: Builder(
+                          builder: (context) {
+                            final hasFocus = Focus.of(context).hasFocus;
+                            return TextField(
+                              controller: passwordController,
+                              obscureText: _obscureText,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: hasFocus ? Colors.blue : Colors.grey,
+                                ),
+                                hintText: 'Mật khẩu',
+                                enabledBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                                    color: hasFocus ? Colors.blue : Colors.grey,
+                                  ),
+                                  onPressed: () {
+                                    setState(() => _obscureText = !_obscureText);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // Forgot password
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            // TODO: Forgot password logic
+                          },
+                          child: const Text(
+                            "Quên mật khẩu?",
+                            style: TextStyle(color: Colors.blue),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
 
                       // Login Button
                       isLoading
@@ -129,7 +179,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                             backgroundColor: Colors.blue,
                           ),
                           onPressed: _login,
@@ -147,11 +198,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: const [
                           Text(
                             'Đại lý: 0123456789 / 123456',
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             'Tài xế: 9876543210 / 123456',
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       )

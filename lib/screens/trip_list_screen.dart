@@ -13,13 +13,16 @@ import './trip_running_screen.dart';
 import './Agent_info_screen.dart';
 import './point_history_screen.dart';
 import '../components/notification_Screen.dart';
-// Trip List Screen
+import '../utils/countdown_Text.dart';
+
+// ================= Trip List Screen =================
 class TripListScreen extends StatefulWidget {
   @override
   _TripListScreenState createState() => _TripListScreenState();
 }
 
-class _TripListScreenState extends State<TripListScreen> with SingleTickerProviderStateMixin {
+class _TripListScreenState extends State<TripListScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -29,7 +32,9 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
   }
 
   List<Trip> _getTripsForStatus(TripStatus status) {
-    return MockDataService.trips.where((trip) => trip.status == status).toList();
+    return MockDataService.trips
+        .where((trip) => trip.status == status)
+        .toList();
   }
 
   @override
@@ -38,14 +43,14 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chuyến đi'),
+        title: Text('Chuyến đi', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(12.0),
             child: Center(
               child: Text(
                 'Điểm: ${user.points}',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),
           ),
@@ -70,16 +75,15 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
                     shape: BoxShape.circle,
                   ),
                   child: Text(
-                    '3', // số thông báo (có thể lấy từ API)
+                    '3',
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ),
             ],
           ),
-
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert), // Icon 3 chấm
+            icon: Icon(Icons.more_vert),
             onSelected: (value) {
               switch (value) {
                 case 'settings':
@@ -103,35 +107,26 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
                 case 'screen3':
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    '/login',   // route name đã khai báo trong MaterialApp
+                    '/login',
                         (Route<dynamic> route) => false,
                   );
                   break;
               }
             },
             itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'settings',
-                child: Text('Cài đặt'),
-              ),
-              PopupMenuItem(
-                value: 'screen1',
-                child: Text('Thông tin'),
-              ),
-              PopupMenuItem(
-                value: 'screen2',
-                child: Text('Lịch sử'),
-              ),
-              PopupMenuItem(
-                value: 'screen3',
-                child: Text('Đăng xuất'),
-              ),
+              PopupMenuItem(value: 'settings', child: Text('Cài đặt')),
+              PopupMenuItem(value: 'screen1', child: Text('Thông tin')),
+              PopupMenuItem(value: 'screen2', child: Text('Lịch sử')),
+              PopupMenuItem(value: 'screen3', child: Text('Đăng xuất')),
             ],
           ),
         ],
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
+          labelColor: Colors.blue,
+          unselectedLabelColor: Colors.black54,
+          indicatorColor: Colors.blue,
           tabs: [
             Tab(text: 'Chuyến'),
             Tab(text: 'Chờ duyệt'),
@@ -157,6 +152,7 @@ class _TripListScreenState extends State<TripListScreen> with SingleTickerProvid
   }
 }
 
+// ================= Trip Tab View =================
 class TripTabView extends StatelessWidget {
   final List<Trip> trips;
 
@@ -177,6 +173,7 @@ class TripTabView extends StatelessWidget {
   }
 }
 
+// ================= Trip Card =================
 class TripCard extends StatelessWidget {
   final Trip trip;
 
@@ -198,60 +195,113 @@ class TripCard extends StatelessWidget {
         screen = TripCompletedScreen();
         break;
       case TripStatus.pending:
-      // Placeholder: bạn có thể tạo PendingScreen riêng
-      //   screen = Scaffold(
-      //     appBar: AppBar(title: Text("Chờ duyệt")),
-      //     body: Center(child: Text("Chuyến đi đang chờ duyệt...")),
-      //   );
-      screen = PendingScreen(trip: trip);
+        screen = PendingScreen(trip: trip);
         break;
       case TripStatus.canceled:
         return;
     }
-
     if (screen != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => screen!),
-      );
+      Navigator.push(context, MaterialPageRoute(builder: (context) => screen!));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8.0),
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: InkWell(
+        borderRadius: BorderRadius.circular(16),
         onTap: () => _navigateByStatus(context),
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Header
+              /// HEADER: From → To + Countdown
+              Row(
+                children: [
+                  Icon(Icons.location_on, color: Colors.blueAccent),
+                  SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      '${trip.fromLocation} → ${trip.toLocation}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 12),
+              // Countdown nổi bật dạng chip
+              if(trip.status == TripStatus.bidding || trip.status == TripStatus.pending)
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: CountdownText(endTime: trip.biddingEndTime),
+              ),
+
+              /// INFO
+              _infoRow(Icons.access_time,
+                  'Đón: ${DateFormatter.format(trip.startTime, 'HH:mm dd/MM/yyyy')}'),
+              _infoRow(Icons.people, 'Số người: ${trip.participantCount}'),
+              if (trip.vehicleType != null)
+                _infoRow(Icons.directions_car, 'Xe: ${trip.vehicleType}'),
+              if (trip.notes != null)
+                _infoRow(Icons.note, 'Ghi chú: ${trip.notes}'),
+
+              Divider(height: 20),
+
+              /// FOOTER
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${trip.fromLocation} → ${trip.toLocation}',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Giá yêu cầu',
+                          style: TextStyle(
+                              fontSize: 13, color: Colors.black54)),
+                      Text(
+                        formatCurrency(trip.requestedPrice),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (trip.bidPrice != null && trip.status != TripStatus.canceled)
+                        Text(
+                          'Ra giá: ${formatCurrency(trip.bidPrice!)}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.green,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                    ],
                   ),
-                  _getStatusChip(trip.status),
+                  if (trip.status == TripStatus.bidding)
+                    ElevatedButton.icon(
+                      onPressed: () => _navigateByStatus(context),
+                      icon: Icon(Icons.gavel, size: 18),
+                      label: Text("Ra giá"),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                 ],
               ),
-              SizedBox(height: 8),
-
-              /// Info chung
-               if (trip.status != TripStatus.completed)
-              Text('Giá yêu cầu: ${formatCurrency(trip.requestedPrice)}'),
-              if (trip.bidPrice != null)
-                Text('Ra giá: ${formatCurrency(trip.bidPrice!)}'),
-              Text('Thời gian đón: ${DateFormatter.format(trip.startTime, 'HH:mm dd/MM/yyyy')}'),
-              Text('Hết hạn ra giá: ${DateFormatter.format(trip.biddingEndTime, 'HH:mm dd/MM/yyyy')}'),
-              Text('Số người: ${trip.participantCount}'),
-              if (trip.vehicleType != null) Text('Loại xe yêu cầu: ${trip.vehicleType}'),
-              if (trip.notes != null) Text('Ghi chú: ${trip.notes}'),
-
             ],
           ),
         ),
@@ -259,38 +309,21 @@ class TripCard extends StatelessWidget {
     );
   }
 
-  Widget _getStatusChip(TripStatus status) {
-    Color color;
-    String label;
-
-    switch (status) {
-      case TripStatus.bidding:
-        color = Colors.blue;
-        label = 'Ra giá';
-        break;
-      case TripStatus.pending:
-        color = Colors.orange;
-        label = 'Chờ duyệt';
-        break;
-      case TripStatus.accepted:
-        color = Colors.green;
-        label = 'Đã nhận';
-        break;
-      case TripStatus.running:
-        color = Colors.purple;
-        label = 'Đang chạy';
-        break;
-      case TripStatus.completed:
-        color = Colors.grey;
-        label = 'Hoàn thành';
-        break;
-      case TripStatus.canceled:
-        return SizedBox.shrink();
-    }
-
-    return Chip(
-      label: Text(label, style: TextStyle(color: Colors.white)),
-      backgroundColor: color,
+  Widget _infoRow(IconData icon, String text) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: Colors.grey[600]),
+          SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 14, color: Colors.black87),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

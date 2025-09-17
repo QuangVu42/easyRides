@@ -12,15 +12,16 @@ class _AgentInfoScreenState extends State<AgentInfoScreen> {
   String email = "dailyA@example.com";
   int points = 120;
 
-  final TextEditingController _oldPasswordController =
-  TextEditingController();
-  final TextEditingController _newPasswordController =
-  TextEditingController();
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
 
   void _addPoints() {
     setState(() {
-      points += 10; // ví dụ mỗi lần nạp thêm 10 điểm
+      points += 10;
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Nạp thêm 10 điểm thành công!")),
+    );
   }
 
   void _changePassword() {
@@ -40,49 +41,93 @@ class _AgentInfoScreenState extends State<AgentInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100], // nền sáng nhẹ
       appBar: AppBar(
-        title: Text("Thông tin đại lý"),
+        elevation: 0,
+        title: Text(
+          "Thông tin đại lý",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
           // Thông tin đại lý
           Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 3,
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Thông tin đại lý",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 16),
-                  Text("Tên: $name"),
-                  Text("Số điện thoại: $phone"),
-                  Text("Email: $email"),
-                  SizedBox(height: 16),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Điểm: $points",
+                      CircleAvatar(
+                        radius: 28,
+                        backgroundColor: Colors.blueAccent.withOpacity(0.1),
+                        child: Icon(Icons.business, color: Colors.blueAccent, size: 30),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          name,
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500)),
-                      ElevatedButton(
-                        onPressed: _addPoints,
-                        child: Text("Nạp thêm"),
-                      )
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
                     ],
+                  ),
+                  SizedBox(height: 16),
+                  _infoRow(Icons.phone, "Số điện thoại", phone),
+                  _infoRow(Icons.email, "Email", email),
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Điểm: $points",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: _addPoints,
+                          icon: Icon(Icons.add, color: Colors.white), // 👈 icon cũng trắng
+                          label: Text(
+                            "Nạp thêm",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold), // 👈 chữ trắng
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 16),
+
+          SizedBox(height: 20),
 
           // Đổi mật khẩu
           Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 3,
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,8 +138,11 @@ class _AgentInfoScreenState extends State<AgentInfoScreen> {
                   TextField(
                     controller: _oldPasswordController,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock_outline),
                       labelText: "Mật khẩu cũ",
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     obscureText: true,
                   ),
@@ -102,19 +150,53 @@ class _AgentInfoScreenState extends State<AgentInfoScreen> {
                   TextField(
                     controller: _newPasswordController,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
                       labelText: "Mật khẩu mới",
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     obscureText: true,
                   ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _changePassword,
-                    child: Text("Xác nhận đổi mật khẩu"),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                      ),
+                      onPressed: _changePassword,
+                      child: Text(
+                        "Xác nhận đổi mật khẩu",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
                   )
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.blueAccent, size: 20),
+          SizedBox(width: 8),
+          Text(
+            "$label: ",
+            style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey[700]),
+          ),
+          Expanded(
+            child: Text(value, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
         ],
       ),
