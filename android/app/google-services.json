@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "437619387798",
+    "firebase_url": "https://easy-rides-bd138-default-rtdb.firebaseio.com",
+    "project_id": "easy-rides-bd138",
+    "storage_bucket": "easy-rides-bd138.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437619387798:android:90aff15a4d97c35d8841b7",
+        "android_client_info": {
+          "package_name": "com.easy.rides"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdP4_OHhzNC8T1LrKgqpjZNowMfXDObbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
